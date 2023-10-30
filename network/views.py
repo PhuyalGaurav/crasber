@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.http import JsonResponse
 import json
 
-from .models import User, NewPost
+from .models import User, Post
 
 
 def error(request, message):
@@ -18,9 +18,9 @@ def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
 def index(request):
-
+    posts = Post.objects.all()
     return render(request, "network/index.html",{
-        
+       "posts" : posts,
     })
 
 
@@ -75,7 +75,7 @@ def register(request):
     else:
         return render(request, "network/register.html")
     
-def newpost(request):
+def newposter(request):
     if request.method == "POST":
         if is_ajax(request):
             print(request.user)
@@ -83,10 +83,13 @@ def newpost(request):
             print(text)
             if not text:
                 text = "Just tryin man"
-            thisPost = NewPost(user=request.user, post_content=text)
+            thisPost = Post(user=request.user, content=text)
             thisPost.save()
             return HttpResponseRedirect(reverse("index"))
         else:
             return error(request, "No Hacking in my site baby")
     else:
       return error(request, "Not This Way Baby")
+    
+def newpost(request):
+    return render(request, "network/newpost.html")

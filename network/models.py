@@ -5,11 +5,12 @@ from django.db import models
 class User(AbstractUser):
     pass
 
-class NewPost(models.Model):
+class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post_content = models.TextField()
+    content = models.TextField()
     creation_date = models.DateTimeField(auto_now_add=True)
+    likes = models.IntegerField(default=0)
 
     def __str__(self):
-        return f'{self.user} has posted {self.post_content} at {self.creation_date}'
+        return f'{self.user} has posted {self.content} at {self.creation_date}'
 
