@@ -3,12 +3,25 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.http import JsonResponse
+import json
 
-from .models import User
+from .models import User, NewPost
 
+
+def error(request, message):
+    return render(request, "network/error.html", {
+        "message" : message
+    })
+
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
 def index(request):
-    return render(request, "network/index.html")
+
+    return render(request, "network/index.html",{
+        
+    })
 
 
 def login_view(request):
@@ -61,3 +74,19 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/register.html")
+    
+def newpost(request):
+    if request.method == "POST":
+        if is_ajax(request):
+            print(request.user)
+            text = json.load(request)['post_content']
+            print(text)
+            if not text:
+                text = "Just tryin man"
+            thisPost = NewPost(user=request.user, post_content=text)
+            thisPost.save()
+            return HttpResponseRedirect(reverse("index"))
+        else:
+            return error(request, "No Hacking in my site baby")
+    else:
+      return error(request, "Not This Way Baby")
