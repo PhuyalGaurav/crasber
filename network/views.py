@@ -92,3 +92,12 @@ def newposter(request):
     
 def newpost(request):
     return render(request, "network/newpost.html")
+
+def userpage(request, user_id ):
+    posts = Post.objects.filter(user=user_id).order_by('-creation_date')
+    return render(request, "network/userpage.html",{
+        "username" : User.objects.get(id = user_id).username,
+        "posts" : posts,
+        "followers" : User.objects.get(id = user_id).followers,
+        "following" : User.objects.get(id = user_id).following,
+    })
