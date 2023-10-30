@@ -5,6 +5,8 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.http import JsonResponse
 import json
+from django.shortcuts import redirect
+
 
 from .models import User, Post
 
@@ -78,14 +80,11 @@ def register(request):
 def newposter(request):
     if request.method == "POST":
         if is_ajax(request):
-            print(request.user)
             text = json.load(request)['post_content']
-            print(text)
             if not text:
                 text = "Just tryin man"
             thisPost = Post(user=request.user, content=text)
             thisPost.save()
-            return HttpResponseRedirect(reverse("index"))
         else:
             return error(request, "No Hacking in my site baby")
     else:

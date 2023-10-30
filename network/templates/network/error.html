@@ -1,5 +1,12 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
+    <script>
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+          }
+          sleep(2000).then(() => { window.location.replace("http://127.0.0.1:8000/")});
+
+    </script>
     <center><h1>{{ message }}</h1></center>
 {% endblock %}
