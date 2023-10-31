@@ -3,8 +3,8 @@ from django.db import models
 
 
 class User(AbstractUser):
-    follower = models.TextField(default="")
-    following = models.TextField(default="")
+    follower = models.TextField(default="1")
+    following = models.TextField(default="1")
     pass
 
 class Post(models.Model):

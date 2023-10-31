@@ -1,0 +1,18 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+<h1>Following</h1>
+{% if posts %}
+    {% for post in posts %}
+        <div class="post">
+            <a href="{% url "userpage" post.user.id %}"><h2>{{ post.user.username }}</h2></a>
+            <h3>{{ post.content }}</h3>
+            <h3>❤️ {{ post.likes }}</h3>
+            <h5>{{ post.creation_date }}</h5>
+        </div>
+    {% endfor %}
+        {% else %}
+            <center><h1 style="color: red; font-weight: Bolder; font-size: 900%;padding: 70px 0;">No posts :(</h1></center>
+    {% endif %}
+{% endblock %}
