@@ -94,10 +94,59 @@ def newpost(request):
     return render(request, "network/newpost.html")
 
 def userpage(request, user_id ):
-    posts = Post.objects.filter(user=user_id).order_by('-creation_date')
-    return render(request, "network/userpage.html",{
-        "username" : User.objects.get(id = user_id).username,
-        "posts" : posts,
-        "followers" : User.objects.get(id = user_id).followers,
-        "following" : User.objects.get(id = user_id).following,
-    })
+    requested_user = User.objects.get(id=user_id)
+    logged_user = User.objects.get(id= request.user.id)
+    if request.method  == "GET":
+        posts = Post.objects.filter(user=user_id).order_by('-creation_date')
+        if request.user.id == user_id:
+            show_follow = False
+        else:
+            show_follow = True
+        logged_following_list = logged_user.following.split(",")
+        print(logged_following_list)
+        if str(user_id) in  logged_following_list:
+            is_following = True
+        else:
+            is_following = False
+        return render(request, "network/userpage.html",{
+            "username" : requested_user.username,
+            "posts" : posts,
+            "followers" : len(requested_user.follower.split(",")),
+            "following" : len(requested_user.following.split(",")),
+            "is_following" : is_following,
+            "show_follow" : show_follow,
+            "user_id" : user_id
+            })
+    
+    else:
+        frequest = request.POST.get("frequest")
+        print(frequest)
+        if frequest == "follow":
+            follower_list = requested_user.follower.split(",")
+            print(f"requested_user follower list : {follower_list}")
+            follower_list.append(str(request.user.id))
+            requested_user.follower = ','.join(follower_list)
+
+            following_list = logged_user.following.split(",")
+            print(f"logged_user following list : {following_list}")
+            following_list.append(str(user_id))
+            logged_user.following = ','.join(following_list)
+        else:
+            follower_list = requested_user.follower.split(",")
+            if str(request.user.id) in follower_list:
+                follower_list.remove(str(request.user.id))
+            requested_user.follower = ','.join(follower_list)
+
+            following_list = logged_user.following.split(",")
+            if str(user_id) in following_list:
+                following_list.remove(str(user_id))
+            logged_user.following = ','.join(following_list)
+
+
+        requested_user.save()
+        logged_user.save()
+        return HttpResponseRedirect(reverse("userpage", kwargs={"user_id" : user_id}))
+    
+
+def followingfeed(request):
+    pass

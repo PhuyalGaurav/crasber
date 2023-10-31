@@ -2,6 +2,8 @@
 {% load static %}
 
 {% block body %}
+    <script>
+    </script>
     <center><h1 style="color: blue; font-size: 400%; padding: 10px">{{ username }}</h1></center>
     <ul class = "following-bar">
         <li>
@@ -9,6 +11,21 @@
         </li>
         <li>
             <h3>Followers : {{ followers }}</h3>
+        </li>
+        <li>
+            {% if show_follow %}
+                {% if is_following %}
+                <form action="{% url "userpage" user_id %}" method="post" >{% csrf_token %}
+                    <input type="hidden" name="frequest" value="unfollow">
+                    <button type="submit" class="btn btn-danger">unfollow</button>
+                </form>
+                {% else %}
+                <form action="{% url "userpage" user_id %}" method="post" >{% csrf_token %}
+                    <input type="hidden" name="frequest" value="follow">
+                    <button type="submit" class="btn btn-primary">Follow</button>
+                </form>
+                {% endif %}
+            {% endif %}
         </li>
     </ul>
     <div style="clear: both;"></div>
