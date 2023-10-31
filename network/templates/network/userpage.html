@@ -3,6 +3,15 @@
 
 {% block body %}
     <center><h1 style="color: blue; font-size: 400%; padding: 10px">{{ username }}</h1></center>
+    <ul class = "following-bar">
+        <li>
+            <h3>Following : {{ following }}</h3>
+        </li>
+        <li>
+            <h3>Followers : {{ followers }}</h3>
+        </li>
+    </ul>
+    <div style="clear: both;"></div>
     {% if posts %}
     {% for post in posts %}
         <div class="post">
