@@ -40,7 +40,7 @@
         <h4 style="text-align: center">New Post</h4>
         <form onsubmit="sendrequest()" method="post" >
             {% csrf_token %}
-            <textarea name="post" id="" cols="500" rows="5" style="padding: 30px;   max-width: 100%; " ></textarea>
+            <textarea name="post" id="" cols="500" rows="5" style="padding: 30px;   max-width: 100%; " required></textarea>
             <br>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

@@ -82,7 +82,7 @@ def newposter(request):
         if is_ajax(request):
             text = json.load(request)['post_content']
             if not text:
-                text = "Just tryin man"
+                return error(request, "Must provide a content")
             thisPost = Post(user=request.user, content=text)
             thisPost.save()
         else:
@@ -93,7 +93,7 @@ def newposter(request):
 def newpost(request):
     return render(request, "network/newpost.html")
 
-@login_required(login_url=LOGIN_URL)
+@login_required(login_url=LOGIN_URL )
 def userpage(request, user_id ):
     requested_user = User.objects.get(id=user_id)
     logged_user = User.objects.get(id= request.user.id)
