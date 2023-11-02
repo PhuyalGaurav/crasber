@@ -1,4 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
+
+
+
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect
 from itertools import chain
@@ -112,8 +115,8 @@ def userpage(request, user_id ):
         return render(request, "network/userpage.html",{
             "username" : requested_user.username,
             "posts" : posts,
-            "followers" : len(requested_user.follower.split(","))-1,
-            "following" : len(requested_user.following.split(","))-1,
+            "followers" : len(requested_user.follower.split(",")),
+            "following" : len(requested_user.following.split(",")),
             "is_following" : is_following,
             "show_follow" : show_follow,
             "user_id" : user_id
