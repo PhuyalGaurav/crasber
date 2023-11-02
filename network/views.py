@@ -1,7 +1,4 @@
 from django.contrib.auth import authenticate, login, logout
-
-
-
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect
 from itertools import chain
@@ -15,6 +12,7 @@ from django.core.paginator import Paginator
 
 from .models import User, Post
 LOGIN_URL = '/login'
+MAX_POSTS = 10
 
 def error(request, message):
     return render(request, "network/error.html", {
@@ -29,9 +27,11 @@ def index(request):
 
     #paginations 
 
-    paginator = Paginator(posts, 6)
+    paginator = Paginator(posts, MAX_POSTS)
     page = request.GET.get('page')
     posts_paginator = paginator.get_page(page)
+
+
     return render(request, "network/index.html",{
        "posts" : posts,
        "page" : posts_paginator,
@@ -121,6 +121,9 @@ def userpage(request, user_id ):
             is_following = True
         else:
             is_following = False
+        paginator = Paginator(posts, MAX_POSTS)
+        page = request.GET.get('page')
+        posts_paginator = paginator.get_page(page)
         return render(request, "network/userpage.html",{
             "username" : requested_user.username,
             "posts" : posts,
@@ -128,7 +131,8 @@ def userpage(request, user_id ):
             "following" : len(requested_user.following.split(",")),
             "is_following" : is_following,
             "show_follow" : show_follow,
-            "user_id" : user_id
+            "user_id" : user_id,
+            "page" : posts_paginator
             })
     
     else:
@@ -166,6 +170,12 @@ def followingfeed(request):
     all_feed = Post.objects.filter(user=following_list[0]).order_by('-creation_date')
     for i in following_list:
         all_feed = list(chain(all_feed, Post.objects.filter(user=int(i)).order_by('-creation_date')))
+
+    paginator = Paginator(all_feed, MAX_POSTS)
+    page = request.GET.get('page')
+    posts_paginator = paginator.get_page(page)
+
     return render(request, "network/following.html",{
-        "posts" : all_feed
+        "posts" : all_feed,
+        "page" : posts_paginator
     })

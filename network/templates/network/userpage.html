@@ -32,8 +32,7 @@
     </ul>
     <div style="clear: both;"></div>
     {% if posts %}
-    <h1>{{ posts }}</h1>
-    {% for post in posts %}
+    {% for post in page %}
         <div class="post">
             <h2>{{ post.user.username }}</h2>
             <h3>{{ post.content }}</h3>
@@ -44,4 +43,16 @@
         {% else %}
             <center><h1 style="color: red; font-weight: Bolder; font-size: 900%;padding: 70px 0;">No posts :(</h1></center>
     {% endif %}
+    <hr><br><br>
+    <div class="pagination">
+     <center>{% if page.has_previous %}
+        <a href="?page=1">&laquo First</a>
+        <a href="?page={{ page.previous_page_number}}">Previous</a>
+     {% endif %}
+     Page {{ page.number }} of {{page.paginator.num_pages}}
+     {% if page.has_next %}
+     <a href="?page={{ page.next_page_number }}">Next</a>
+        <a href="?page={{ page.paginator.num_pages }}">Last &raquo</a>
+     {% endif %}</center>
+     <br></div>
 {% endblock body %}
