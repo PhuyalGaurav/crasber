@@ -32,6 +32,7 @@
     </ul>
     <div style="clear: both;"></div>
     {% if posts %}
+    <h1>{{ posts }}</h1>
     {% for post in posts %}
         <div class="post">
             <h2>{{ post.user.username }}</h2>

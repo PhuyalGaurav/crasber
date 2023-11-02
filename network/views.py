@@ -9,6 +9,8 @@ from django.shortcuts import render
 from django.urls import reverse
 import json
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+
 
 
 from .models import User, Post
@@ -23,9 +25,16 @@ def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
 def index(request):
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by('-creation_date')
+
+    #paginations 
+
+    paginator = Paginator(posts, 6)
+    page = request.GET.get('page')
+    posts_paginator = paginator.get_page(page)
     return render(request, "network/index.html",{
        "posts" : posts,
+       "page" : posts_paginator,
     })
 
 
@@ -88,6 +97,7 @@ def newposter(request):
                 return error(request, "Must provide a content")
             thisPost = Post(user=request.user, content=text)
             thisPost.save()
+            return HttpResponseRedirect(reverse("index"))
         else:
             return error(request, "No Hacking in my site baby")
     else:
@@ -102,7 +112,6 @@ def userpage(request, user_id ):
     logged_user = User.objects.get(id= request.user.id)
     if request.method  == "GET":
         posts = Post.objects.filter(user=user_id).order_by('-creation_date')
-        print(posts)
         if request.user.id == user_id:
             show_follow = False
         else:
@@ -124,7 +133,6 @@ def userpage(request, user_id ):
     
     else:
         frequest = request.POST.get("frequest")
-        print(frequest)
         if frequest == "follow":
             follower_list = requested_user.follower.split(",")
             follower_list.append(str(request.user.id))
@@ -152,7 +160,9 @@ def userpage(request, user_id ):
 @login_required
 def followingfeed(request):
     logged_user = User.objects.get(id= request.user.id)
-    following_list = logged_user.following.split(",")
+    following_list = logged_user.following.split(",").remove('')
+    if not following_list:
+        following_list = ['1']
     all_feed = Post.objects.filter(user=following_list[0]).order_by('-creation_date')
     for i in following_list:
         all_feed = list(chain(all_feed, Post.objects.filter(user=int(i)).order_by('-creation_date')))

@@ -26,3 +26,12 @@ h5{
     float: left;
     margin: 10px;
 }
+.pagination {
+    font: xx-large ;
+    font-family: sans-serif;
+    text-align: center;
+    margin-bottom: 30px;
+    margin: auto;
+    width: 15%;
+    padding: 10px;
+}
