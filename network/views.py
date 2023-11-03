@@ -31,8 +31,7 @@ def index(request):
     paginator = Paginator(posts, MAX_POSTS)
     page = request.GET.get('page')
     posts_paginator = paginator.get_page(page)
-
-
+    
     return render(request, "network/index.html",{
        "posts" : posts,
        "page" : posts_paginator,
@@ -194,3 +193,24 @@ def edit(request, post_id):
     return JsonResponse({'status': 'ok', 'content': post.content})
 
 
+@csrf_exempt
+@login_required
+def like(request, post_id):
+    try:
+        post = Post.objects.get(id=post_id)
+        likers = post.likers.split(",")
+        print(likers)
+        if str(request.user.id) in likers:
+            post.likes = post.likes - 1
+            likers.remove(str(request.user.id))
+            post.likers = ','.join(likers)
+            animation = 'unlike'
+        else:
+            post.likes = post.likes + 1
+            likers.append(str(request.user.id))
+            post.likers = ','.join(likers)
+            animation = 'like'
+        post.save()
+        return JsonResponse({'status': 'ok', 'likes' : post.likes, 'animation' : animation})
+    except:
+        return error(request,"Not Possible :(")

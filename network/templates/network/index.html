@@ -9,8 +9,15 @@
         <div class="post">
             <a href="{% url "userpage" post.user.id %}"><h2>{{ post.user.username }}</h2></a>
             <h3 id="post-content-{{post.id}}">{{ post.content }}</h3>
-            <h3>❤️ {{ post.likes }}</h3>
-            <h5>{{ post.creation_date }}</h5>
+            <ul class="likeul">
+                <li>
+                    <h3 id="likeButton{{ post.id }}"><a onclick="likepost(`{{ post.id }}`)">❤️ </a></h3>
+                </li>
+                <li>
+                    <h3 id="likes{{ post.id }}">{{ post.likes }}</h3>
+                </li>
+            </ul>
+            <h5 style="text-align: right;">{{ post.creation_date }}</h5>
             {% if post.user.id == user.id %}
             <div class="d-flex justify-content-end">
                 <button class="btn btn-secondary" data-toggle="modal" data-target="#edit_{{post.id}}">Edit</button>
@@ -69,6 +76,22 @@
             const content = document.querySelector(`#post-content-${id}`)
             content.innerHTML = result.content
 
+        }          
+        async function likepost(id) {           
+            response = await fetch(`/like/${id}`, {
+                                    method: 'POST',
+                                    body: JSON.stringify({
+                                        'like': 'yealike',
+                                    }),
+                                })
+            result = await response.json()
+            const likecounter = document.querySelector(`#likes${id}`)
+            likecounter.innerHTML = result.likes
+            if (result.animation == 'like') {
+                document.querySelector(`#likeButton${id}`).className = 'flip-scale'
+            } else {
+                document.querySelector(`#likeButton${id}`).className = 'flip-scale-down-hor'
+            }
         }  
      </script>
 {% endblock %}
