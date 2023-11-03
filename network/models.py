@@ -12,6 +12,7 @@ class Post(models.Model):
     content = models.TextField()
     creation_date = models.DateTimeField(auto_now_add=True)
     likes = models.IntegerField(default=0)
+    edited = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.user} has posted {self.content} at {self.creation_date}'

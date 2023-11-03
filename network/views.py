@@ -1,10 +1,11 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,JsonResponse
 from itertools import chain
 from django.shortcuts import render
 from django.urls import reverse
 import json
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 
@@ -179,3 +180,17 @@ def followingfeed(request):
         "posts" : all_feed,
         "page" : posts_paginator
     })
+
+
+@csrf_exempt
+@login_required
+def edit(request, post_id):
+    post = Post.objects.get(id=post_id)
+    new_content = json.loads(request.body)['new_content']
+    if post.content != new_content:
+        post.edited = True
+        post.content = new_content
+        post.save()
+    return JsonResponse({'status': 'ok', 'content': post.content})
+
+

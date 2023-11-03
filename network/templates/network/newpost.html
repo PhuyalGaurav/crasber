@@ -2,44 +2,10 @@
 {% load static %}
 
 {% block body %}
-    <script>
-        function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                const cookies = document.cookie.split(';');
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
-        const csrftoken = getCookie('csrftoken');
-        function sendrequest() {
-            let text = document.querySelector("textarea").value;
-            const request = new Request(
-                "http://127.0.0.1:8000/newposter",
-                {headers:{
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRFToken': csrftoken,
-                },}
-                )
-                fetch(request, {
-                    method: "POST",
-                    body: JSON.stringify({
-                        'post_content': text,
-                    }),
-                });
-        }
-        </script>
-    <h1>All Posts</h1>
+    <h1>Edit a post</h1>
     <div style=" border: 2px black ridge; margin: 10px; padding: 10px;">
         <h4 style="text-align: center">New Post</h4>
         <form onsubmit="sendrequest()" method="post" >
-            {% csrf_token %}
             <textarea name="post" id="" cols="500" rows="5" style="padding: 30px;   max-width: 100%; " required></textarea>
             <br>
             <button type="submit" class="btn btn-primary">Submit</button>

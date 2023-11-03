@@ -10,6 +10,9 @@
             <h3>{{ post.content }}</h3>
             <h3>❤️ {{ post.likes }}</h3>
             <h5>{{ post.creation_date }}</h5>
+            {% if post.user.id == user.id %}
+            <a href="{% url "edit" post.id %}"><h3>Edit</h3></a>
+            {% endif %}
         </div>
     {% endfor %}
         {% else %}
