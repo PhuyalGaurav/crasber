@@ -164,7 +164,7 @@ def userpage(request, user_id ):
 @login_required
 def followingfeed(request):
     logged_user = User.objects.get(id= request.user.id)
-    following_list = logged_user.following.split(",").remove('')
+    following_list = logged_user.following.split(",")
     if not following_list:
         following_list = ['1']
     all_feed = Post.objects.filter(user=following_list[0]).order_by('-creation_date')

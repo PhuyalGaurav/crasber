@@ -50,7 +50,7 @@
             <center><h1 style="color: red; font-weight: Bolder; font-size: 900%;padding: 70px 0;">No posts :(</h1></center>
     {% endif %}
     <hr><br><br>
-    <div class="pagination">
+    <div class="pagination" style="display: inline;">
      <center>{% if page.has_previous %}
         <a href="?page=1">&laquo First</a>
         <a href="?page={{ page.previous_page_number}}">Previous</a>
@@ -88,10 +88,10 @@
             const likecounter = document.querySelector(`#likes${id}`)
             likecounter.innerHTML = result.likes
             if (result.animation == 'like') {
-                document.querySelector(`#likeButton${id}`).className = 'flip-scale'
+                document.querySelector(`#likeButton${id}`).className = 'box'
             } else {
-                document.querySelector(`#likeButton${id}`).className = 'flip-scale-down-hor'
+                document.querySelector(`#likeButton${id}`).className = 'box2'
             }
-        }  
+        }
      </script>
 {% endblock %}
