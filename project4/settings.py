@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 DEFAULT_AUTO_FIELD='django.db.models.AutoField'
+TIME_ZONE = "Asia/Kathmandu"
 
 # Application definition
 

@@ -184,12 +184,15 @@ def followingfeed(request):
 @login_required
 def edit(request, post_id):
     post = Post.objects.get(id=post_id)
-    new_content = json.loads(request.body)['new_content']
-    if post.content != new_content:
-        post.edited = True
-        post.content = new_content
-        post.save()
-    return JsonResponse({'status': 'ok', 'content': post.content})
+    if request.user.id == post.user.id:
+        new_content = json.loads(request.body)['new_content']
+        if post.content != new_content:
+            post.edited = True
+            post.content = new_content
+            post.save()
+        return JsonResponse({'status': 'ok', 'content': post.content})
+    else:
+        return error(request, "Not your post to edit")
 
 
 @csrf_exempt
