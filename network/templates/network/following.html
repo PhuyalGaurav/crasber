@@ -17,32 +17,6 @@
                 </li>
             </ul>
             <h5 style="text-align: right;">{{ post.creation_date }}</h5>
-            {% if post.user.id == user.id %}
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-secondary" data-toggle="modal" data-target="#edit_{{post.id}}">Edit</button>
-            </div>
-            
-        
-            <div class="modal fade" id="edit_{{post.id}}" tabindex="-1" role="dialog" aria-labelledby="edit_{{post.id}}_label" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Edit</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <textarea row="5" id="edited_content_{{post.id}}" class="form-control">{{post.content}}</textarea>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="SaveNewContent('{{post.id}}')">Save changes</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                    </div>
-                </div>
-            </div>
-            {% endif %}
         </div>
     {% endfor %}
         {% else %}

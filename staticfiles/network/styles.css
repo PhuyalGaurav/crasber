@@ -24,72 +24,60 @@ h5{
     display: inline;
     float: left;
     margin-bottom: -10px;
+    margin-left: -20px;
+}
+.following-bar li{
+  display: inline;
+  float: left;
+}
+#followBtn, #unfollowBtn{
+  display: flex;
 }
 
-@-webkit-keyframes flip-scale-up-hor {
-    0% {
-      -webkit-transform: scale(1) rotateX(0);
-              transform: scale(1) rotateX(0);
-    }
-    50% {
-      -webkit-transform: scale(2.5) rotateX(-90deg);
-              transform: scale(2.5) rotateX(-90deg);
-    }
-    100% {
-      -webkit-transform: scale(1) rotateX(-180deg);
-              transform: scale(1) rotateX(-180deg);
-    }
+@keyframes scaleAnimation {
+  0% {
+      transform: scale(1); /* Start with the original size */
   }
-  @keyframes flip-scale-up-hor {
-    0% {
-      -webkit-transform: scale(1) rotateX(0);
-              transform: scale(1) rotateX(0);
-    }
-    50% {
-      -webkit-transform: scale(2.5) rotateX(-90deg);
-              transform: scale(2.5) rotateX(-90deg);
-    }
-    100% {
-      -webkit-transform: scale(1) rotateX(-180deg);
-              transform: scale(1) rotateX(-180deg);
-    }
+  50%{
+    transform: scale(1.5); /* Increase size to 1.5 times the original size */
   }
-
-  @-webkit-keyframes flip-scale-up-hor2 {
-    0% {
-      -webkit-transform: scale(1) rotateX(0);
-              transform: scale(1) rotateX(0);
-    }
-    50% {
-      -webkit-transform: scale(2.5) rotateX(-90deg);
-              transform: scale(2.5) rotateX(-90deg);
-    }
-    100% {
-      -webkit-transform: scale(1) rotateX(-180deg);
-              transform: scale(1) rotateX(-180deg);
-    }
+  100% {
+    transform: scale(1);
   }
-  @keyframes flip-scale-up-hor2 {
-    0% {
-      -webkit-transform: scale(1) rotateX(0);
-              transform: scale(1) rotateX(0);
-    }
-    50% {
-      -webkit-transform: scale(2.5) rotateX(-90deg);
-              transform: scale(2.5) rotateX(-90deg);
-    }
-    100% {
-      -webkit-transform: scale(1) rotateX(-180deg);
-              transform: scale(1) rotateX(-180deg);
-    }
-  }
-  
-  
-.flip-scale {
-	-webkit-animation: flip-scale-up-hor 0.5s linear both;
-	        animation: flip-scale-up-hor 0.5s linear both;
 }
-.flip-scale-down-hor {
-	-webkit-animation: flip-scale-up-hor2 0.5s linear alternate-reverse both;
-	        animation: flip-scale-up-hor2 0.5s linear alternate-reverse both;
+@keyframes downScaleAnimation {
+  0% {
+      transform: scale(1); /* Start with the original size */
+  }
+  50%{
+    transform: scale(0.5); /* Increase size to 1.5 times the original size */
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.box {  
+  animation: scaleAnimation 1s;
+}
+.box2 {  
+  animation: downScaleAnimation 1s;
+}
+.pagination {
+  text-align: center;
+  font-family: sans-serif;
+  font-size: xx-large;
+  font-weight: 500;
+}
+#aniamteUp{
+  animation: scaleAnimation 1s;
+}
+#animateDown{
+  animation: downScaleAnimation 1s;
+}
+a, a:focus, a:active {
+  text-decoration: none;
+  color: rgb(56, 88, 117)(0, 132, 255);
+}
+a:hover{
+  color: rgb(56, 88, 117)(0, 132, 255);
 }

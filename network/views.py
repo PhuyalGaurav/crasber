@@ -91,15 +91,12 @@ def register(request):
     
 def newposter(request):
     if request.method == "POST":
-        if is_ajax(request):
-            text = json.load(request)['post_content']
-            if not text:
-                return error(request, "Must provide a content")
-            thisPost = Post(user=request.user, content=text)
-            thisPost.save()
-            return HttpResponseRedirect(reverse("index"))
-        else:
-            return error(request, "No Hacking in my site baby")
+        text = request.POST.get("content")
+        if not text:
+            return error(request, "Must provide a content")
+        thisPost = Post(user=request.user, content=text)
+        thisPost.save()
+        return HttpResponseRedirect(reverse("index"))
     else:
       return error(request, "Not This Way Baby")
     
