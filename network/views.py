@@ -168,6 +168,8 @@ def followingfeed(request):
     if not following_list:
         following_list = ['1']
     all_feed = Post.objects.filter(user=following_list[0]).order_by('-creation_date')
+    if "" in following_list:
+        following_list.remove("")
     for i in following_list:
         all_feed = list(chain(all_feed, Post.objects.filter(user=int(i)).order_by('-creation_date')))
 
