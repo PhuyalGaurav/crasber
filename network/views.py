@@ -166,13 +166,14 @@ def userpage(request, user_id ):
 def followingfeed(request):
     logged_user = User.objects.get(id= request.user.id)
     following_list = logged_user.following.split(",")
-    if not following_list:
-        following_list = ['1']
-    all_feed = Post.objects.filter(user=following_list[0]).order_by('-creation_date')
     if "" in following_list:
         following_list.remove("")
-    for i in following_list:
-        all_feed = list(chain(all_feed, Post.objects.filter(user=int(i)).order_by('-creation_date')))
+    try:
+        all_feed = Post.objects.filter(user=following_list[0]).order_by('-creation_date')
+        for i in following_list:
+            all_feed = list(chain(all_feed, Post.objects.filter(user=int(i)).order_by('-creation_date')))
+    except ValueError:
+        all_feed=[]
 
     paginator = Paginator(all_feed, MAX_POSTS)
     page = request.GET.get('page')
