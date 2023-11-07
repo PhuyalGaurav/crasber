@@ -2,9 +2,13 @@
 {% load static %}
 
 {% block body %}
+<div class="pagename">
+    {{ username }}
+    </div>
+
     <script>
     </script>
-    <center><h1 style="color: blue; font-size: 400%; padding: 10px">{{ username }}</h1></center>
+    <center><h1 style="color: gray; font-size: 400%; padding: 10px">{{ username }}</h1></center>
     <ul class = "following-bar">
         <li>
             <h3>Following : {{ following }}</h3>

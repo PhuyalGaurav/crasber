@@ -1,12 +1,12 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
+    <div class="pagename">{{ message }}</div>
     <script>
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
           }
-          sleep(2000).then(() => { window.location.replace("/")});
+          sleep(800).then(() => { window.location.replace("/")});
 
     </script>
-    <center><h1>{{ message }}</h1></center>
 {% endblock %}
