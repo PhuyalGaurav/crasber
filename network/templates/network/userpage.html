@@ -2,9 +2,13 @@
 {% load static %}
 
 {% block body %}
+<div class="pagename">
+    {{ username }}
+    </div>
+
     <script>
     </script>
-    <center><h1 style="color: blue; font-size: 400%; padding: 10px">{{ username }}</h1></center>
+    <center><h1 style="color: gray; font-size: 400%; padding: 10px">{{ username }}</h1></center>
     <ul class = "following-bar">
         <li>
             <h3>Following : {{ following }}</h3>
@@ -45,6 +49,12 @@
                     <h3 id="likes{{ post.id }}">{{ post.likes }}</h3>
                 </li>
             </ul>
+            <h6 style="color: gray;text-align: right; visibility: hidden;" id="editedtag{{ post.id }}">(edited)</h1>  
+                {% if post.edited %}
+                <script>
+                    document.querySelector(`#editedtag{{ post.id }}`).style.visibility = "visible";
+                </script>
+                {% endif %}
             <h5 style="text-align: right;">{{ post.creation_date }}</h5>
             {% if post.user.id == user.id %}
             <div class="d-flex justify-content-end">
@@ -102,7 +112,7 @@
             const modal = document.querySelector(`#edit_${id}`)
             const content = document.querySelector(`#post-content-${id}`)
             content.innerHTML = result.content
-
+            document.querySelector(`#editedtag${id}`).style.visibility = "visible";
         }          
         async function likepost(id) {           
             response = await fetch(`/like/${id}`, {

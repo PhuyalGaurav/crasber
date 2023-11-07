@@ -3,9 +3,11 @@ h1 {
 }
 
 .post {
-    margin: 10px;
+    margin: 10px auto;
     padding: 20px;
     border: black 2px ridge;
+    max-width: 75%;
+    border-radius: 10px;
 }
 
 h2, h3, h5 ,h1{
@@ -80,4 +82,39 @@ a, a:focus, a:active {
 }
 a:hover{
   color: rgb(56, 88, 117)(0, 132, 255);
+}
+
+.pagename {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(97, 97, 97, 0.5); /* Semi-transparent black background */
+  z-index: 1; /* Ensure it's above other elements */
+  font-size: 100px;
+  visibility: hidden;
+  animation: pagenameanimation 1s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+@keyframes pagenameanimation {
+  0%{
+    opacity: 0%;
+    visibility: visible;
+    background-color:rgb(255, 255, 255,0.2);
+  }
+  50%{
+    opacity: 90%;
+    visibility: visible;
+    background-color: rgb(202, 202, 202,0.7); /* Semi-transparent black background */
+  }
+  100%{
+    opacity: 0%;
+    visibility: hidden;
+    background-color:rgb(255, 255, 255,0);
+  }
 }
