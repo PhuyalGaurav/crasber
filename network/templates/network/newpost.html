@@ -9,8 +9,7 @@
     <div style=" border: 2px black ridge; margin: auto; padding: 10px; border-radius: 30px;max-width: 90%; height: 20%">
         <form action="{% url "newposter" %}" method="post" >
             {% csrf_token %}
-            <textarea name="content" id="" cols="500" rows="15" style="padding: 30px;   max-width: 100%; border-radius: 30px; margin:auto ;" required></textarea>
-            <br>
+            <textarea name="content" id="" cols="500" rows="10" style="padding: 30px;   max-width: 100%; border-radius: 30px; margin:auto ; font-size: 40px;" required autofocus></textarea>
             <button type="submit" class="btn btn-primary" style="margin-left: 45%; font: 5em sans-serif; border-radius: 30px;" >Submit</button>
         </form>
     </div>

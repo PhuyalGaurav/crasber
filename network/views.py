@@ -44,6 +44,10 @@ def login_view(request):
         # Attempt to sign user in
         username = request.POST["username"]
         password = request.POST["password"]
+        if username.lower() == "arnav":
+            return render(request, "network/login.html", {
+                "message": "Boss said to not log you in :("
+            })
         user = authenticate(request, username=username, password=password)
 
         # Check if authentication successful
@@ -78,7 +82,7 @@ def register(request):
 
         # Attempt to create new user
         try:
-            user = User.objects.create_user(username, email, password)
+            user = User.objects.create_user(username.lower(), email, password)
             user.save()
         except IntegrityError:
             return render(request, "network/register.html", {
@@ -96,7 +100,7 @@ def newposter(request):
             return error(request, "Must provide a content")
         thisPost = Post(user=request.user, content=text)
         thisPost.save()
-        return HttpResponseRedirect(reverse("index"))
+        return error(request, "Posted !! ")
     else:
       return error(request, "Not This Way Baby")
     
