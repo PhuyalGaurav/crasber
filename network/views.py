@@ -17,7 +17,8 @@ MAX_POSTS = 10
 
 def error(request, message):
     return render(request, "network/error.html", {
-        "message" : message
+        "message" : message,
+        "pagename" : "buffer page"
     })
 
 def is_ajax(request):
@@ -35,6 +36,7 @@ def index(request):
     return render(request, "network/index.html",{
        "posts" : posts,
        "page" : posts_paginator,
+       "pagename" : "Home"
     })
 
 
@@ -46,7 +48,8 @@ def login_view(request):
         password = request.POST["password"]
         if username.lower() == "arnav":
             return render(request, "network/login.html", {
-                "message": "Boss said to not log you in :("
+                "message": "Boss said to not log you in :(",
+                "pagename" : "Login"
             })
         user = authenticate(request, username=username, password=password)
 
@@ -56,10 +59,10 @@ def login_view(request):
             return HttpResponseRedirect(reverse("index"))
         else:
             return render(request, "network/login.html", {
-                "message": "Invalid username and/or password."
+                "message": "Invalid username and/or password.","pagename": "Login"
             })
     else:
-        return render(request, "network/login.html")
+        return render(request, "network/login.html",{"pagename" : "Login"})
 
 
 def logout_view(request):
@@ -77,7 +80,8 @@ def register(request):
         confirmation = request.POST["confirmation"]
         if password != confirmation:
             return render(request, "network/register.html", {
-                "message": "Passwords must match."
+                "message": "Passwords must match.",
+                "pagename" : "Register"
             })
 
         # Attempt to create new user
@@ -86,12 +90,13 @@ def register(request):
             user.save()
         except IntegrityError:
             return render(request, "network/register.html", {
-                "message": "Username already taken."
+                "message": "Username already taken.",
+                "pagename" : "Register"
             })
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:
-        return render(request, "network/register.html")
+        return render(request, "network/register.html", {"pagename" : "Register"})
     
 def newposter(request):
     if request.method == "POST":
@@ -105,7 +110,7 @@ def newposter(request):
       return error(request, "Not This Way Baby")
     
 def newpost(request):
-    return render(request, "network/newpost.html")
+    return render(request, "network/newpost.html",{"pagename" : "New Post"})
 
 @login_required(login_url=LOGIN_URL )
 def userpage(request, user_id ):
@@ -133,7 +138,8 @@ def userpage(request, user_id ):
             "is_following" : is_following,
             "show_follow" : show_follow,
             "user_id" : user_id,
-            "page" : posts_paginator
+            "page" : posts_paginator,
+            "pagename" : requested_user.username
             })
     
     else:
@@ -181,7 +187,8 @@ def followingfeed(request):
 
     return render(request, "network/following.html",{
         "posts" : all_feed,
-        "page" : posts_paginator
+        "page" : posts_paginator,
+        "pagename" : "Following Feed"
     })
 
 

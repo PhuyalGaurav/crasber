@@ -1,10 +1,9 @@
 {% extends "network/layout.html" %}
 {% load static %}
+{% block title %}: {{ pagename }}{% endblock %}
 
 {% block body %}
-<div class="pagename">
-    New post
-    </div>
+
     
     <div style=" border: 2px black ridge; margin: auto; padding: 10px; border-radius: 30px;max-width: 90%; height: 20%">
         <form action="{% url "newposter" %}" method="post" >
