@@ -1,10 +1,7 @@
 {% extends "network/layout.html" %}
+{% block title %}: {{ pagename }}{% endblock %}
 
 {% block body %}
-
-<div class="pagename">
-    Login
-</div>
 
     {% if message %}
         <div class="alert alert-danger" role="alert" style="text-align: center;">{{ message }}</div>

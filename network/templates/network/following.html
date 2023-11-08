@@ -1,10 +1,9 @@
 {% extends "network/layout.html" %}
 {% load static %}
+{% block title %}: {{ pagename }}{% endblock title%}
 
 {% block body %}
-<div class="pagename">
-Following
-</div>
+
 {% if posts %}
     {% for post in page %}
         <div class="post">
