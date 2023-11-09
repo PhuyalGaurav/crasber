@@ -76,7 +76,7 @@
             <ul class="nav-links">
               <li>
                 <a href="{% url 'index' %}">
-                  <i class='bx bx-grid-alt' ></i>
+                  <i class='bx bxs-home' ></i>
                   <span class="link_name">Home</span>
                 </a>
                 <ul class="sub-menu blank">
@@ -86,7 +86,7 @@
               {% if user.is_authenticated %}
               <li>
                 <a href="{% url 'newpost' %}">
-                  <i class='bx bx-compass' ></i>
+                  <i class='bx bxs-message-add' ></i>
                   <span class="link_name">New Post</span>
                 </a>
                 <ul class="sub-menu blank">
@@ -95,7 +95,7 @@
               </li>
               <li>
                 <a href="{% url 'followingfeed' %}">
-                  <i class='bx bx-history'></i>
+                  <i class='bx bxs-user-detail'></i>
                   <span class="link_name">Following</span>
                 </a>
                 <ul class="sub-menu blank">
@@ -104,7 +104,7 @@
               </li>
               <li>
                 <a href="{% url 'logout' %}">
-                  <i class='bx bx-cog' ></i>
+                  <i class='bx bxs-log-out' ></i>
                   <span class="link_name">Logout</span>
                 </a>
                 <ul class="sub-menu blank">
