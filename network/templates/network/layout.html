@@ -63,8 +63,13 @@
               </ul>
             </div>
           </nav> -->
+          <script>
+            function goindex(){
+              location.replace(`{% url 'index' %}`)
+            }
+          </script>
           <div class="sidebar close">
-            <div class="logo-details">
+            <div class="logo-details" onclick="goindex()">
               <i><span style="color: rgb(108, 108, 243);">C</span><span style="color: gray;">B</span></i>
               <span class="logo_name"><span style="color: rgb(108, 108, 243);">Caras</span><span style="color: gray;">Ber</span></span>
             </div>
@@ -110,10 +115,10 @@
                 {% endif %}
                 {% if user.is_authenticated %}
             <div class="profile-details">
-              <div class="profile-content">
-                <img src="image/profile.jpg" alt="profileImg">
+              <div class="profile-content" onclick="usrprofile()">
+                <img src="{{ user.pfp.url }}" alt="profileImg">
               </div>
-              <div class="name-job">
+              <div class="name-job" onclick="usrprofile()">
                 <div class="profile_name">{{user.username}}</div>
                 <div class="job">{{ exclusive }}</div>
               </div>
@@ -128,13 +133,15 @@
               <i class='bx bx-menu' ></i>
               <span class="text">{{ pagename }}</span>
               {% if not user.is_authenticated %}
-              <span style="margin-left: 2%;" class="text"><a href="{% url 'login' %}">Login</a></span>
-              <span style="margin-left: 1%;" class="text"><a href="{% url 'register' %}">Register</a></span>
+              <span style="margin-left: 20%;" class="text" id="topright"><a href="{% url 'login' %}">Login</a></span>
               {% endif %}
             </div>
           </section>
 
           <script>
+            function usrprofile(){
+              location.replace(`{% url "userpage" user.id %}`)
+            }
           let arrow = document.querySelectorAll(".arrow");
           for (var i = 0; i < arrow.length; i++) {
             arrow[i].addEventListener("click", (e)=>{

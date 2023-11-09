@@ -2,57 +2,7 @@
 {% load static %}
 {% block title %}: {{ pagename }}{% endblock %}
 {% block body %}
-{% if posts %}
-    {% for post in page %}
-        <div class="post">
-            <a href="{% url "userpage" post.user.id %}"><h2>{{ post.user.username }}</h2></a>
-            <h3 id="post-content-{{post.id}}">{{ post.content }}</h3>
-            <ul class="likeul">
-                <li>
-                    <h3 id="likeButton{{ post.id }}"><a onclick="likepost(`{{ post.id }}`)">❤️ </a></h3>
-                </li>
-                <li>
-                    <h3 id="likes{{ post.id }}">{{ post.likes }}</h3>
-                </li>
-            </ul>
-            <h6 style="color: gray;text-align: right; visibility: hidden;" id="editedtag{{ post.id }}">(edited)</h1>  
-                {% if post.edited %}
-                <script>
-                    document.querySelector(`#editedtag{{ post.id }}`).style.visibility = "visible";
-                </script>
-                {% endif %}
-            <h5 style="text-align: right;">{{ post.creation_date }}</h5>
-            {% if post.user.id == user.id %}
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-secondary" data-toggle="modal" data-target="#edit_{{post.id}}">Edit</button>
-            </div>
-            
-        
-            <div class="modal fade" id="edit_{{post.id}}" tabindex="-1" role="dialog" aria-labelledby="edit_{{post.id}}_label" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Edit</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <textarea row="5" id="edited_content_{{post.id}}" class="form-control">{{post.content}}</textarea>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="SaveNewContent('{{post.id}}')">Save changes</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                    </div>
-                </div>
-            </div>
-            {% endif %}
-        </div>
-    {% endfor %}
-        {% else %}
-            <center><h1 style="color: red; font-weight: Bolder; font-size: 900%;padding: 70px 0;">No posts :(</h1></center>
-    {% endif %}
+    {% include "network/post.html" %}
     <hr><br><br>
     <div class="pagination" style="display: inline;">
      <center>{% if page.has_previous %}
@@ -65,37 +15,4 @@
         <a href="?page={{ page.paginator.num_pages }}">Last &raquo</a>
      {% endif %}</center>
      <br></div>
-
-     <script>
-        async function SaveNewContent(id) {
-            new_content = document.querySelector(`#edited_content_${id}`).value
-            response = await fetch(`/edit/${id}`, {
-                                    method: 'POST',
-                                    body: JSON.stringify({
-                                        'new_content': new_content,
-                                    }),
-                                })
-            result = await response.json()
-            const modal = document.querySelector(`#edit_${id}`)
-            const content = document.querySelector(`#post-content-${id}`)
-            content.innerHTML = result.content
-            document.querySelector(`#editedtag${id}`).style.visibility = "visible";
-        }          
-        async function likepost(id) {           
-            response = await fetch(`/like/${id}`, {
-                                    method: 'POST',
-                                    body: JSON.stringify({
-                                        'like': 'yealike',
-                                    }),
-                                })
-            result = await response.json()
-            const likecounter = document.querySelector(`#likes${id}`)
-            likecounter.innerHTML = result.likes
-            if (result.animation == 'like') {
-                document.querySelector(`#likeButton${id}`).className = 'box'
-            } else {
-                document.querySelector(`#likeButton${id}`).className = 'box2'
-            }
-        }
-     </script>
 {% endblock %}

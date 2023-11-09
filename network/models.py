@@ -1,10 +1,12 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+import random
 
 class User(AbstractUser):
     follower = models.TextField(default="", null=True)
     following = models.TextField(default="", null=True)
-    pass
+    pfp = models.ImageField(default=f"pfp/defaults/{random.randrange(1,10)}.png", upload_to="pfp/user")
+    
 
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
