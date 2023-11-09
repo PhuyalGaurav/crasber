@@ -1,7 +1,7 @@
 {% if posts %}
     {% for post in page %}
         <div class="post">
-            <a href="{% url "userpage" post.user.id %}"><span><img class="profile-pic" src="{{ post.user.pfp.url }}" alt="pfp" ></span>
+            <a href="{% url "userpage" post.user.username %}"><span><img class="profile-pic" src="{{ post.user.pfp.url }}" alt="pfp" ></span>
             <span class="username">{{ post.user.username }}</span></a>
             <h3 id="post-content-{{post.id}}" style="margin-left: 75px">{{ post.content }}</h3>
             {% if post.user.id == user.id %}

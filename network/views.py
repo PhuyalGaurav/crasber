@@ -97,7 +97,8 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/register.html", {"pagename" : "Register"})
-    
+
+@login_required(login_url=LOGIN_URL )   
 def newposter(request):
     if request.method == "POST":
         text = request.POST.get("content")
@@ -112,34 +113,38 @@ def newposter(request):
 def newpost(request):
     return render(request, "network/newpost.html",{"pagename" : "New Post"})
 
-@login_required(login_url=LOGIN_URL )
-def userpage(request, user_id ):
-    requested_user = User.objects.get(id=user_id)
-    logged_user = User.objects.get(id= request.user.id)
-    if request.method  == "GET":
-        posts = Post.objects.filter(user=user_id).order_by('-creation_date')
-        if request.user.id == user_id:
-            show_follow = False
-        else:
-            show_follow = True
+def userpage(request, username ):
+    requested_user = User.objects.get(username=username)
+    requested_user_id = requested_user.id
+    if request.user.is_authenticated:
+        logged_user = User.objects.get(id= request.user.id)
         logged_following_list = logged_user.following.split(",")
-        if str(user_id) in  logged_following_list:
+        if str(requested_user_id) in  logged_following_list:
             is_following = True
         else:
             is_following = False
+    else:
+        is_following = False
+
+    if request.method  == "GET":
+        posts = Post.objects.filter(user=requested_user_id).order_by('-creation_date')
+        if request.user.id == requested_user_id:
+            show_follow = False
+        else:
+            show_follow = True
         paginator = Paginator(posts, MAX_POSTS)
         page = request.GET.get('page')
         posts_paginator = paginator.get_page(page)
         return render(request, "network/userpage.html",{
-            "username" : requested_user.username,
+            "profile_user" : requested_user,
             "posts" : posts,
             "followers" : len(requested_user.follower.split(",")),
             "following" : len(requested_user.following.split(",")),
             "is_following" : is_following,
             "show_follow" : show_follow,
-            "user_id" : user_id,
             "page" : posts_paginator,
-            "pagename" : requested_user.username
+            "pagename" : requested_user.username,
+            "total_posts": len(posts)
             })
     
     else:
@@ -150,7 +155,7 @@ def userpage(request, user_id ):
             requested_user.follower = ','.join(follower_list)
 
             following_list = logged_user.following.split(",")
-            following_list.append(str(user_id))
+            following_list.append(str(requested_user_id))
             logged_user.following = ','.join(following_list)
         else:
             follower_list = requested_user.follower.split(",")
@@ -159,16 +164,16 @@ def userpage(request, user_id ):
             requested_user.follower = ','.join(follower_list)
 
             following_list = logged_user.following.split(",")
-            if str(user_id) in following_list:
-                following_list.remove(str(user_id))
+            if str(requested_user_id) in following_list:
+                following_list.remove(str(requested_user_id))
             logged_user.following = ','.join(following_list)
 
 
         requested_user.save()
         logged_user.save()
-        return HttpResponseRedirect(reverse("userpage", kwargs={"user_id" : user_id}))
+        return HttpResponseRedirect(reverse("userpage", kwargs={"username" : requested_user_id}))
     
-@login_required
+@login_required(login_url=LOGIN_URL )
 def followingfeed(request):
     logged_user = User.objects.get(id= request.user.id)
     following_list = logged_user.following.split(",")
@@ -193,12 +198,12 @@ def followingfeed(request):
 
 
 @csrf_exempt
-@login_required
+@login_required(login_url=LOGIN_URL )
 def edit(request, post_id):
     post = Post.objects.get(id=post_id)
     if request.user.id == post.user.id:
         new_content = json.loads(request.body)['new_content']
-        if post.content != new_content:
+        if post.content != new_content and not post.content:
             post.edited = True
             post.content = new_content
             post.save()
@@ -208,7 +213,7 @@ def edit(request, post_id):
 
 
 @csrf_exempt
-@login_required
+@login_required(login_url=LOGIN_URL )
 def like(request, post_id):
     try:
         post = Post.objects.get(id=post_id)

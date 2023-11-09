@@ -116,10 +116,18 @@
                 {% if user.is_authenticated %}
             <div class="profile-details">
               <div class="profile-content" onclick="usrprofile()">
+                {% if user.is_authenticated %}
                 <img src="{{ user.pfp.url }}" alt="profileImg">
+                {% else %}
+                <img src="" alt="Not Signed in">
+                {% endif %}
               </div>
               <div class="name-job" onclick="usrprofile()">
+                {% if user.is_authenticated %}
                 <div class="profile_name">{{user.username}}</div>
+                {% else %}
+                <div class="profile_name">Sign in</div>
+                {% endif %}
                 <div class="job">{{ exclusive }}</div>
               </div>
               <a href="{% url "logout" %}"><i class='bx bx-log-out' ></i></a>
@@ -139,9 +147,10 @@
           </section>
 
           <script>
+            {% if user.is_authenticated %}
             function usrprofile(){
-              location.replace(`{% url "userpage" user.id %}`)
-            }
+              location.replace(`{% url "userpage" user.username %}`)
+            }{% endif %}
           let arrow = document.querySelectorAll(".arrow");
           for (var i = 0; i < arrow.length; i++) {
             arrow[i].addEventListener("click", (e)=>{
