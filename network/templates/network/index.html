@@ -3,16 +3,4 @@
 {% block title %}: {{ pagename }}{% endblock %}
 {% block body %}
     {% include "network/post.html" %}
-    <hr><br><br>
-    <div class="pagination" style="display: inline;">
-     <center>{% if page.has_previous %}
-        <a href="?page=1">&laquo First</a>
-        <a href="?page={{ page.previous_page_number}}">Previous</a>
-     {% endif %}
-     Page {{ page.number }} of {{page.paginator.num_pages}}
-     {% if page.has_next %}
-     <a href="?page={{ page.next_page_number }}">Next</a>
-        <a href="?page={{ page.paginator.num_pages }}">Last &raquo</a>
-     {% endif %}</center>
-     <br></div>
 {% endblock %}

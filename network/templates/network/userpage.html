@@ -2,82 +2,82 @@
 {% load static %}
 {% block title %}: {{ pagename }}{% endblock %}
 {% block body %}
-<section class="h-100 gradient-custom-2">
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col col-lg-9 col-xl-7">
-          <div class="card">
-            <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
-              <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
-                <img src="{{ profile_user.pfp.url }}"
-                  alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
-                  style="width: 150px; z-index: 1">
-                {% comment %} <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark"
-                  style="z-index: 1;">
-                  Edit profile
-                </button> {% endcomment %}
-              </div>
-              <div class="ms-3" style="margin-top: 130px;">
-                  {% if profile_user.username == 'urmom' %}
-                  <h5 style="font-size: 50px; color: rgba(153, 125, 252, 1);">{{ profile_user.username }}</h5>
-                  {% elif profile_user.username == 'gaurav' %}
-                  <h5 style="font-size: 50px; color: gold;">{{ profile_user.username }}</h5>
-                  {% else %}
-                  <h5 style="font-size: 50px; color: rgba(153, 225, 255, 1);">{{ profile_user.username }}</h5>
-                  {% endif %}
-                {% comment %} <p>New York</p> {% endcomment %}
-              </div>
-            </div>
-            <div class="p-4 text-black" style="background-color: #f8f9fa;">
-              <div class="d-flex justify-content-end text-center py-1">
-                <div>
-                  <p class="mb-1 h5">{{ total_posts }}</p>
-                  <p class="small text-muted mb-0">Total posts</p>
-                </div>
-                <div class="px-3">
-                  <p class="mb-1 h5">{{ followers }}</p>
-                  <p class="small text-muted mb-0">Followers</p>
-                </div>
-                <div>
-                  <p class="mb-1 h5">{{ following }}</p>
-                  <p class="small text-muted mb-0">Following</p>
-                </div>
-                <br>
-                <div>
-                    {% if user.is_authenticated %}
-                    {% if show_follow %}
-                        {% if is_following %}
-                        <form action="{% url "userpage" profile_user.username %}" method="post">{% csrf_token %}
-                            <input type="hidden" name="frequest" value="unfollow">
-                            <button type="submit" class="btn btn-danger" style="border-radius: 20px;">Unfollow</button>
-                        </form>
+      <section class="h-100 gradient-custom-2">
+          <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+              <div class="col col-lg-9 col-xl-7">
+                <div class="card">
+                  <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
+                    <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
+                      <img src="{{ profile_user.pfp.url }}"
+                        alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
+                        style="width: 150px; z-index: 1">
+                      {% comment %} <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark"
+                        style="z-index: 1;">
+                        Edit profile
+                      </button> {% endcomment %}
+                    </div>
+                    <div class="ms-3" style="margin-top: 130px;">
+                        {% if profile_user.username == 'urmom' %}
+                        <h5 style="font-size: 50px; color: rgba(153, 125, 252, 1);">{{ profile_user.username }}</h5>
+                        {% elif profile_user.username == 'gaurav' %}
+                        <h5 style="font-size: 50px; color: gold;">{{ profile_user.username }}</h5>
                         {% else %}
-                        <form action="{% url "userpage" profile_user.username %}" method="post" >{% csrf_token %}
-                            <input type="hidden" name="frequest" value="follow">
-                            <button type="submit" class="btn btn-primary" style="border-radius: 20px;">Follow</button>
-                        </form>
+                        <h5 style="font-size: 50px; color: rgba(153, 225, 255, 1);">{{ profile_user.username }}</h5>
                         {% endif %}
-                    {% endif %}
-                {% endif %}
-                </div>
-              </div>
-            </div>
-            <div class="card-body p-4 text-black">
-              <div class="mb-5" style="text-align: center;">
-                <p class="lead fw-normal mb-1">About</p>
-                <div class="p-4" style="background-color: #f8f9fa;">
-                  <p class="font-italic mb-1">Web Developer</p>
+                      {% comment %} <p>New York</p> {% endcomment %}
+                    </div>
+                  </div>
+                  <div class="p-4 text-black" style="background-color: #f8f9fa;">
+                    <div class="d-flex justify-content-end text-center py-1">
+                      <div>
+                        <p class="mb-1 h5">{{ total_posts }}</p>
+                        <p class="small text-muted mb-0">Total posts</p>
+                      </div>
+                      <div class="px-3">
+                        <p class="mb-1 h5">{{ followers }}</p>
+                        <p class="small text-muted mb-0">Followers</p>
+                      </div>
+                      <div>
+                        <p class="mb-1 h5">{{ following }}</p>
+                        <p class="small text-muted mb-0">Following</p>
+                      </div>
+                      <br>
+                      <div>
+                          {% if user.is_authenticated %}
+                          {% if show_follow %}
+                              {% if is_following %}
+                              <form action="{% url "userpage" profile_user.username %}" method="post">{% csrf_token %}
+                                  <input type="hidden" name="frequest" value="unfollow">
+                                  <button type="submit" class="btn btn-danger" style="border-radius: 20px;">Unfollow</button>
+                              </form>
+                              {% else %}
+                              <form action="{% url "userpage" profile_user.username %}" method="post" >{% csrf_token %}
+                                  <input type="hidden" name="frequest" value="follow">
+                                  <button type="submit" class="btn btn-primary" style="border-radius: 20px;">Follow</button>
+                              </form>
+                              {% endif %}
+                          {% endif %}
+                      {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body p-4 text-black">
+                    <div class="mb-5" style="text-align: center;">
+                      <p class="lead fw-normal mb-1">About</p>
+                      <div class="p-4" style="background-color: #f8f9fa;">
+                        <p class="font-italic mb-1">Web Developer</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
+        </section>
 
-    <script>
-    </script>
+          <script>
+          </script>
     {% include "network/post.html" %}
 
 {% endblock body %}

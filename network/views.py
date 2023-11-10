@@ -7,7 +7,6 @@ from django.urls import reverse
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator
 
 
 
@@ -28,14 +27,9 @@ def index(request):
     posts = Post.objects.all().order_by('-creation_date')
 
     #paginations 
-
-    paginator = Paginator(posts, MAX_POSTS)
-    page = request.GET.get('page')
-    posts_paginator = paginator.get_page(page)
     
     return render(request, "network/index.html",{
        "posts" : posts,
-       "page" : posts_paginator,
        "pagename" : "Home"
     })
 
@@ -132,9 +126,6 @@ def userpage(request, username ):
             show_follow = False
         else:
             show_follow = True
-        paginator = Paginator(posts, MAX_POSTS)
-        page = request.GET.get('page')
-        posts_paginator = paginator.get_page(page)
         return render(request, "network/userpage.html",{
             "profile_user" : requested_user,
             "posts" : posts,
@@ -142,7 +133,6 @@ def userpage(request, username ):
             "following" : len(requested_user.following.split(",")),
             "is_following" : is_following,
             "show_follow" : show_follow,
-            "page" : posts_paginator,
             "pagename" : requested_user.username,
             "total_posts": len(posts)
             })
@@ -186,13 +176,8 @@ def followingfeed(request):
     except ValueError:
         all_feed=[]
 
-    paginator = Paginator(all_feed, MAX_POSTS)
-    page = request.GET.get('page')
-    posts_paginator = paginator.get_page(page)
-
     return render(request, "network/following.html",{
         "posts" : all_feed,
-        "page" : posts_paginator,
         "pagename" : "Following Feed"
     })
 
@@ -236,3 +221,10 @@ def like(request, post_id):
         return JsonResponse({'status': 'ok', 'likes' : post.likes, 'animation' : animation})
     except:
         return error(request,"Not Possible :(")
+
+
+def postpage(request,post_id):
+    post = Post.objects.get(id=post_id)
+    return render(request, "network/postpage.html", {
+        "post" : post
+    })

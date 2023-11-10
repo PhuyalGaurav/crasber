@@ -1,12 +1,12 @@
 {% if posts %}
     {% for post in page %}
-        <div class="post">
+        <div class="post" style="position: relative;" onclick="gopostpage(`{{ post.id }}`)">
             <a href="{% url "userpage" post.user.username %}"><span><img class="profile-pic" src="{{ post.user.pfp.url }}" alt="pfp" ></span>
             <span class="username">{{ post.user.username }}</span></a>
             <h3 id="post-content-{{post.id}}" style="margin-left: 75px">{{ post.content }}</h3>
             {% if post.user.id == user.id %}
             <div class="d-flex justify-content-end">
-                <button class="btn btn-secondary" data-toggle="modal" data-target="#edit_{{post.id}}">Edit</button>
+                <button class="btn btn-secondary" data-toggle="modal" data-target="#edit_{{post.id}}" style="right: 1; bottom: 20">Edit</button>
             </div>
             <div class="modal fade" id="edit_{{post.id}}" tabindex="-1" role="dialog" aria-labelledby="edit_{{post.id}}_label" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -37,7 +37,7 @@
                     <h3 id="likes{{ post.id }}">{{ post.likes }}</h3>
                 </li>
                 <li>
-                    <h5 style="padding-left: 950px">{{ post.creation_date }}</h5>
+                    <h5 style="position:absolute; bottom:0; right:0; margin-right: 1%">{{ post.creation_date }}</h5>
                 </li>
             </ul>
             <h6 style="color: gray;text-align: right; visibility: hidden;" id="editedtag{{ post.id }}">(edited)</h1>  
@@ -52,6 +52,9 @@
             <center><h1 style="color: red; font-weight: Bolder; font-size: 900%;padding: 70px 0;">No posts :(</h1></center>
     {% endif %}
 <script>
+    function gopostpage(id){
+        {% comment %} location.replace(`post/${id}`) {% endcomment %}
+    }
     async function SaveNewContent(id) {
         new_content = document.querySelector(`#edited_content_${id}`).value
         response = await fetch(`/edit/${id}`, {
