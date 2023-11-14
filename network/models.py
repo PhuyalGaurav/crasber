@@ -5,6 +5,7 @@ import random
 class User(AbstractUser):
     follower = models.TextField(default="", null=True)
     following = models.TextField(default="", null=True)
+    bio = models.TextField(default="", null=True)
     pfp = models.ImageField(default=f"pfp/defaults/{random.randrange(1,10)}.png", upload_to="pfp/user")
     
 

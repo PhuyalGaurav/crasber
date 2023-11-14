@@ -161,7 +161,7 @@ def userpage(request, username ):
 
         requested_user.save()
         logged_user.save()
-        return HttpResponseRedirect(reverse("userpage", kwargs={"username" : requested_user_id}))
+        return HttpResponseRedirect(reverse("userpage", kwargs={"username" : username}))
     
 @login_required(login_url=LOGIN_URL )
 def followingfeed(request):
@@ -173,7 +173,7 @@ def followingfeed(request):
         all_feed = Post.objects.filter(user=following_list[0]).order_by('-creation_date')
         for i in following_list:
             all_feed = list(chain(all_feed, Post.objects.filter(user=int(i)).order_by('-creation_date')))
-    except ValueError:
+    except:
         all_feed=[]
 
     return render(request, "network/following.html",{
@@ -228,3 +228,37 @@ def postpage(request,post_id):
     return render(request, "network/postpage.html", {
         "post" : post
     })
+
+def editprofile(request, username):
+    if request.method == "GET":
+        if request.user.username == username:
+            return render(request, "network/editprofile.html",{
+                "pagename" : f"Edit Profile : {username}"
+            })
+        else:
+            return error(request, "Denied")
+    else: 
+        new_username = request.POST['username']
+        new_email = request.POST['email']
+        new_first_name = request.POST['first_name']
+        new_last_name = request.POST['last_name']
+        new_bio = request.POST['bio']
+        password = request.POST['password']
+        new_pfp = request.POST['pfp']
+        this_user = User.objects.get(username=username)
+        if this_user.check_password(password):
+            this_user.username = new_username
+            this_user.email = new_email
+            this_user.first_name = new_first_name
+            this_user.last_name = new_last_name
+            this_user.bio = new_bio
+            this_user.pfp = new_pfp
+            this_user.save()
+        else:
+            return render(request, "network/editprofile.html",{
+                "pagename" : f"Edit Profile : {username}",
+                "message" : "Incorrect Password"
+            })
+        return HttpResponseRedirect(reverse("userpage", kwargs={"username" : new_username}))
+        
+        

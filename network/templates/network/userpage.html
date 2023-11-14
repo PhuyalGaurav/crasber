@@ -12,20 +12,23 @@
                       <img src="{{ profile_user.pfp.url }}"
                         alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
                         style="width: 150px; z-index: 1">
-                      {% comment %} <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark"
-                        style="z-index: 1;">
-                        Edit profile
-                      </button> {% endcomment %}
+                        {% if user.username == profile_user.username %}
+                         <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark" onclick="editprofile()"
+                          style="z-index: 1;">
+                          Edit profile
+                        </button> 
+                        {% endif %}
                     </div>
                     <div class="ms-3" style="margin-top: 130px;">
                         {% if profile_user.username == 'urmom' %}
                         <h5 style="font-size: 50px; color: rgba(153, 125, 252, 1);">{{ profile_user.username }}</h5>
                         {% elif profile_user.username == 'gaurav' %}
                         <h5 style="font-size: 50px; color: gold;">{{ profile_user.username }}</h5>
+                        <p style="color: gold;">{{ profile_user.first_name }} {{ profile_user.first_name }}</p> 
                         {% else %}
                         <h5 style="font-size: 50px; color: rgba(153, 225, 255, 1);">{{ profile_user.username }}</h5>
                         {% endif %}
-                      {% comment %} <p>New York</p> {% endcomment %}
+                       <p>{{ profile_user.first_name }} {{ profile_user.first_name }}</p> 
                     </div>
                   </div>
                   <div class="p-4 text-black" style="background-color: #f8f9fa;">
@@ -46,37 +49,39 @@
                       <div>
                           {% if user.is_authenticated %}
                           {% if show_follow %}
+                          <form action="{% url "userpage" profile_user.username %}" method='post'>
+                            {% csrf_token %}
                               {% if is_following %}
-                              <form action="{% url "userpage" profile_user.username %}" method="post">{% csrf_token %}
                                   <input type="hidden" name="frequest" value="unfollow">
                                   <button type="submit" class="btn btn-danger" style="border-radius: 20px;">Unfollow</button>
-                              </form>
-                              {% else %}
-                              <form action="{% url "userpage" profile_user.username %}" method="post" >{% csrf_token %}
+                              {% else %}                           
                                   <input type="hidden" name="frequest" value="follow">
                                   <button type="submit" class="btn btn-primary" style="border-radius: 20px;">Follow</button>
-                              </form>
-                              {% endif %}
+                                  {% endif %}
+                                </form>
                           {% endif %}
                       {% endif %}
                       </div>
                     </div>
                   </div>
+                  {% if profile_user.bio %}
                   <div class="card-body p-4 text-black">
                     <div class="mb-5" style="text-align: center;">
-                      <p class="lead fw-normal mb-1">About</p>
+                      <p class="lead fw-normal mb-1">About Me: </p>
                       <div class="p-4" style="background-color: #f8f9fa;">
-                        <p class="font-italic mb-1">Web Developer</p>
+                        <p class="font-italic mb-1">{{ profile_user.bio }}</p>
                       </div>
                     </div>
-                  </div>
+                  </div>{% endif %}
                 </div>
               </div>
             </div>
           </div>
         </section>
-
           <script>
+            function editprofile(){
+              location.replace(`{% url "editprofile" user.username %}`)
+            }
           </script>
     {% include "network/post.html" %}
 
