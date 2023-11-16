@@ -114,14 +114,14 @@
               <li>
                 {% endif %}
             <div class="profile-details">
-              <div class="profile-content" onclick="usrprofile()">
+              <div class="profile-content" {% if user.is_authenticated %} onclick="location.replace(`{% url "userpage" user.username %}`)" {% else %} onclick="location.replace(`{% url "login" %}`)" {% endif %}>
                 {% if user.is_authenticated %}
                 <img src="{{ user.get_pfp.url }}" alt="profileImg">
                 {% else %}
-                <img src="" alt="Not Signed in">
+                <img src="{% static "network/login.png" %}" alt="profileImg">
                 {% endif %}
               </div>
-              <div class="name-job" onclick="usrprofile()">
+              <div class="name-job" {% if user.is_authenticated %} onclick="location.replace(`{% url "userpage" user.username %}`)" {% else %} onclick="location.replace(`{% url "login" %}`)" {% endif %}>
                 {% if user.is_authenticated %}
                 <div class="profile_name">{{user.username}}</div>
                 {% else %}
@@ -145,10 +145,6 @@
           </section>
 
           <script>
-            {% if user.is_authenticated %}
-            function usrprofile(){
-              location.replace(`{% url "userpage" user.username %}`)
-            }{% endif %}
           let arrow = document.querySelectorAll(".arrow");
           for (var i = 0; i < arrow.length; i++) {
             arrow[i].addEventListener("click", (e)=>{
