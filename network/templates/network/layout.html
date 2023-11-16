@@ -113,11 +113,10 @@
               </li>
               <li>
                 {% endif %}
-                {% if user.is_authenticated %}
             <div class="profile-details">
               <div class="profile-content" onclick="usrprofile()">
                 {% if user.is_authenticated %}
-                <img src="{{ user.pfp.url }}" alt="profileImg">
+                <img src="{{ user.get_pfp.url }}" alt="profileImg">
                 {% else %}
                 <img src="" alt="Not Signed in">
                 {% endif %}
@@ -132,7 +131,6 @@
               </div>
               <a href="{% url "logout" %}"><i class='bx bx-log-out' ></i></a>
             </div>
-            {% endif %}
           </li>
         </ul>
           </div>

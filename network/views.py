@@ -25,7 +25,6 @@ def is_ajax(request):
 
 def index(request):
     posts = Post.objects.all().order_by('-creation_date')
-
     #paginations 
     
     return render(request, "network/index.html",{
@@ -238,21 +237,23 @@ def editprofile(request, username):
         else:
             return error(request, "Denied")
     else: 
-        new_username = request.POST['username']
-        new_email = request.POST['email']
-        new_first_name = request.POST['first_name']
-        new_last_name = request.POST['last_name']
-        new_bio = request.POST['bio']
-        password = request.POST['password']
-        new_pfp = request.POST['pfp']
         this_user = User.objects.get(username=username)
+        password = request.POST['password']
         if this_user.check_password(password):
+            new_username = request.POST['username']
+            new_email = request.POST['email']
+            new_first_name = request.POST['first_name']
+            new_last_name = request.POST['last_name']
+            new_bio = request.POST['bio']
+            if 'pfp' in request.FILES:
+                new_pfp = request.FILES['pfp']
+                this_user.pfp = new_pfp
             this_user.username = new_username
             this_user.email = new_email
             this_user.first_name = new_first_name
             this_user.last_name = new_last_name
             this_user.bio = new_bio
-            this_user.pfp = new_pfp
+            print(this_user.first_name)
             this_user.save()
         else:
             return render(request, "network/editprofile.html",{

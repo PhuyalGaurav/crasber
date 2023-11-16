@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}: {{ pagename }}{% endblock %}
 {% block body %}
-<form action="{% url "editprofile" user.username %}" method="post">
+<form action="{% url "editprofile" user.username %}" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <div class="container">
     <h1>Edit Profile</h1>
@@ -18,7 +18,7 @@
       <!-- left column -->
       <div class="col-md-3">
         <div class="text-center">
-            <img src="{{ user.pfp.url }}"
+            <img src="{{ user.get_pfp.url }}"
             alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
             style="width: 150px; z-index: 1" id="blah">          
             <h6>Upload a different photo...</h6>
