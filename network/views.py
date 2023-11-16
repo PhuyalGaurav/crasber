@@ -238,13 +238,13 @@ def editprofile(request, username):
             return error(request, "Denied")
     else: 
         this_user = User.objects.get(username=username)
-        password = request.POST['password']
+        password = request.POST.get('password')
         if this_user.check_password(password):
-            new_username = request.POST['username']
-            new_email = request.POST['email']
-            new_first_name = request.POST['first_name']
-            new_last_name = request.POST['last_name']
-            new_bio = request.POST['bio']
+            new_username = request.POST.get('username')
+            new_email = request.POST.get('email')
+            new_first_name = request.POST.get('first_name')
+            new_last_name = request.POST.get('last_name')
+            new_bio = request.POST.get('bio')
             if 'pfp' in request.FILES:
                 new_pfp = request.FILES['pfp']
                 this_user.pfp = new_pfp
