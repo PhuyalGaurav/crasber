@@ -8,7 +8,7 @@ Social Media is a clone of Twitter, made with Django. It is still under developm
 
 ## How to use
 * clone the repo :  `https://github.com/PhuyalGaurav/social-media `
-* Install django : `pip install django`
+* Install django & pillow : `pip install django`->`pip install pillow`
 * If you want a new database then: 
 	* Delete the previous database : `del db.sqlite3` or `rm db.sqlite3`  
 	* Create a new database : `python manage.py migrate`
