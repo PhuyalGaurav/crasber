@@ -91,7 +91,7 @@
         </section>
           <script>
             function editprofile(){
-              location.replace(`{% url "editprofile" user.username %}`)
+              location.replace(`{% url "editprofile" profile_user.username %}`)
             }
           </script>
     {% include "network/post.html" %}
