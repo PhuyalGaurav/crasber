@@ -7,7 +7,7 @@ CrasBer is just another take at a social media app, made with Django. It is stil
 * Git
 
 ## How to use
-* clone the repo :  `https://github.com/PhuyalGaurav/social-media `
+* clone the repo :  `https://github.com/PhuyalGaurav/crasber `
 * Install django & pillow : `pip install django`->`pip install pillow`
 * If you want a new database then: 
 	* Delete the previous database : `del db.sqlite3` or `rm db.sqlite3`  
