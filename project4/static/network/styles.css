@@ -1,0 +1,28 @@
+h1 {
+    margin: 10px;
+}
+
+.post {
+    margin: 10px;
+    padding: 20px;
+    border: black 2px ridge;
+}
+
+h2, h3, h5 ,h1{
+    margin: 10px;
+}
+
+h2{
+    font-weight: bolder;
+}
+
+h5{
+    font-weight: lighter;
+    color: gray;
+}
+
+.following-bar li{
+    display: inline;
+    float: left;
+    margin: 10px;
+}

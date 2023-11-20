@@ -1,0 +1,83 @@
+h1 {
+    margin: 10px;
+}
+
+.post {
+    margin: 10px;
+    padding: 20px;
+    border: black 2px ridge;
+}
+
+h2, h3, h5 ,h1{
+    margin: 10px;
+}
+
+h2{
+    font-weight: bolder;
+}
+
+h5{
+    font-weight: lighter;
+    color: gray;
+}
+.likeul li{
+    display: inline;
+    float: left;
+    margin-bottom: -10px;
+    margin-left: -20px;
+}
+.following-bar li{
+  display: inline;
+  float: left;
+}
+#followBtn, #unfollowBtn{
+  display: flex;
+}
+
+@keyframes scaleAnimation {
+  0% {
+      transform: scale(1); /* Start with the original size */
+  }
+  50%{
+    transform: scale(1.5); /* Increase size to 1.5 times the original size */
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes downScaleAnimation {
+  0% {
+      transform: scale(1); /* Start with the original size */
+  }
+  50%{
+    transform: scale(0.5); /* Increase size to 1.5 times the original size */
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.box {  
+  animation: scaleAnimation 1s;
+}
+.box2 {  
+  animation: downScaleAnimation 1s;
+}
+.pagination {
+  text-align: center;
+  font-family: sans-serif;
+  font-size: xx-large;
+  font-weight: 500;
+}
+#aniamteUp{
+  animation: scaleAnimation 1s;
+}
+#animateDown{
+  animation: downScaleAnimation 1s;
+}
+a, a:focus, a:active {
+  text-decoration: none;
+  color: rgb(56, 88, 117)(0, 132, 255);
+}
+a:hover{
+  color: rgb(56, 88, 117)(0, 132, 255);
+}
