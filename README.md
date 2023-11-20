@@ -1,13 +1,13 @@
-# Social Media [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
+# CrasBer [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 
-Social Media is a clone of Twitter, made with Django. It is still under development.
+CrasBer is just another take at a social media app, made with Django. It is still under development.
 
 ## Pre-Requisites
 * Python 3+ (with pip)
 * Git
 
 ## How to use
-* clone the repo :  `https://github.com/PhuyalGaurav/social-media `
+* clone the repo :  `https://github.com/PhuyalGaurav/crasber `
 * Install django & pillow : `pip install django`->`pip install pillow`
 * If you want a new database then: 
 	* Delete the previous database : `del db.sqlite3` or `rm db.sqlite3`  
