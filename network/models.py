@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 import random
+from PIL import Image
+
 
 class User(AbstractUser):
     def current_user_name(self):
