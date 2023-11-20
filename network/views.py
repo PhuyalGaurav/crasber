@@ -200,12 +200,11 @@ def edit(request, post_id):
 
 
 @csrf_exempt
-@login_required(login_url=LOGIN_URL )
 def like(request, post_id):
     try:
+        user = User.objects.get(pk=request.user.id)
         post = Post.objects.get(id=post_id)
         likers = post.likers.split(",")
-        print(likers)
         if str(request.user.id) in likers:
             post.likes = post.likes - 1
             likers.remove(str(request.user.id))
@@ -219,7 +218,7 @@ def like(request, post_id):
         post.save()
         return JsonResponse({'status': 'ok', 'likes' : post.likes, 'animation' : animation})
     except:
-        return error(request,"Not Possible :(")
+        return JsonResponse({'redirect' : 'login'})
 
 
 def postpage(request,post_id):
