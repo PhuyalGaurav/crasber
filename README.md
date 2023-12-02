@@ -1,7 +1,7 @@
 # CrasBer [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 
 #### [Video Demo](https://www.youtube.com/watch?v=pUYkWfYBmys)
-CrasBer is just another take at a social media app, made with Django. It is still under development.
+CrasBer is just another take at a social media app, made with Django.
 
 ## Pre-Requisites
 * Python 3+ (with pip)
