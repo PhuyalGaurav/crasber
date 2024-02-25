@@ -6,11 +6,12 @@ import random
 class User(AbstractUser):
     def current_user_name(self):
         return self.username
-    default_pfp_location = f"pfp/defaults/{random.randrange(1,10)}.png"
+
+    default_pfp_location = f"pfp/defaults/{random.randrange(1,4)}.png"
     follower = models.TextField(default="", null=True)
     following = models.TextField(default="", null=True)
     bio = models.TextField(default="", null=True)
-    pfp = models.ImageField(upload_to=f'pfp',blank=True, null=True)
+    pfp = models.ImageField(upload_to=f"media/user/pfp", blank=True, null=True)
     def_pfp = models.ImageField(default=default_pfp_location)
 
     def get_pfp(self):
@@ -18,6 +19,7 @@ class User(AbstractUser):
             return self.pfp
         else:
             return self.def_pfp
+
 
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -28,5 +30,4 @@ class Post(models.Model):
     likers = models.TextField(default="", null=True)
 
     def __str__(self):
-        return f'{self.user} has posted {self.content} at {self.creation_date}'
-
+        return f"{self.user} has posted {self.content} at {self.creation_date}"
