@@ -1,4 +1,4 @@
-# CrasBer [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
+# CrasBer [![Awesome](https://awesome.re/badge.svg)](https://awesome.re).
 
 #### [Video demo](https://www.youtube.com/watch?v=pUYkWfYBmys)
 CrasBer is just another take at a social media app, made with Django.
