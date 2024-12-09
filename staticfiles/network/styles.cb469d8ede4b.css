@@ -1,0 +1,136 @@
+h1 {
+    margin: 10px;
+}
+
+.profile-pic {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: contain;
+  background-color: #E0E0E0;
+}
+.post {
+    margin: 10px auto;
+    margin-left: 20%;
+    padding: 20px;
+    border: black 2px hidden;
+    box-shadow: 3px 3px 3px 3px gray;
+    max-width: 70%;
+    
+    border-radius: 10px;
+}
+
+#topright {
+  display:flex;
+  flex-direction:row;
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  font-size: 30px;
+}
+
+h2{
+    font-weight: bolder;
+}
+
+h5{
+    font-weight: lighter;
+    color: gray;
+}
+.likeul li{
+    display: inline;
+    float: left;
+    margin-bottom: -10px;
+    margin-left: -20px;
+    cursor: pointer;
+}
+.following-bar li{
+  display: inline;
+  float: left;
+}
+#followBtn, #unfollowBtn{
+  display: flex;
+}
+
+@keyframes scaleAnimation {
+  0% {
+      transform: scale(1); /* Start with the original size */
+  }
+  50%{
+    transform: scale(1.5); /* Increase size to 1.5 times the original size */
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes downScaleAnimation {
+  0% {
+      transform: scale(1); /* Start with the original size */
+  }
+  50%{
+    transform: scale(0.5); /* Increase size to 1.5 times the original size */
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.box {  
+  animation: scaleAnimation 1s;
+}
+.box2 {  
+  animation: downScaleAnimation 1s;
+}
+#aniamteUp{
+  animation: scaleAnimation 1s;
+}
+#animateDown{
+  animation: downScaleAnimation 1s;
+}
+a, a:focus, a:active {
+  text-decoration: none;
+  color: rgb(56, 88, 117)(0, 132, 255);
+}
+a:hover{
+  color: rgb(56, 88, 117)(0, 132, 255);
+}
+
+.pagename {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(97, 97, 97, 0.5); /* Semi-transparent black background */
+  z-index: 1; /* Ensure it's above other elements */
+  font-size: 100px;
+  visibility: hidden;
+  animation: pagenameanimation 1s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+@keyframes pagenameanimation {
+  0%{
+    opacity: 0%;
+    visibility: visible;
+    background-color:rgb(255, 255, 255,0.2);
+  }
+  50%{
+    opacity: 90%;
+    visibility: visible;
+    background-color: rgb(202, 202, 202,0.7); /* Semi-transparent black background */
+  }
+  100%{
+    opacity: 0%;
+    visibility: hidden;
+    background-color:rgb(255, 255, 255,0);
+  }
+}
+
+.username{
+  color: #3b394d;
+  margin-left: 1%;
+  font-size: xx-large;
+}
