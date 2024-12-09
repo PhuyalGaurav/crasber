@@ -17,7 +17,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 
 DEBUG = False
 
-ALLOWED_HOSTS = ["crasber.gaurav.rocks"]
+ALLOWED_HOSTS = ["*"]
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 TIME_ZONE = "Asia/Kathmandu"
 
